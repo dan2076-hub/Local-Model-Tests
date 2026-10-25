@@ -1,0 +1,15 @@
+{
+  "case_id": "F03",
+  "level": "medium",
+  "brief": "seeds/F03/BRIEF.md",
+  "seed_sha": "72d27d4f9803e5e1a6c7c652cdad1f79362cc0a622fb8ec0169256dca160f3b4",
+  "oracle_sha": "7c2cdad6b279ed593b094dbb37eb69916780fb98e08bb18532108a36efa624a6",
+  "seed_hash_format": "SHA256(concat(sorted(relative_posix_path UTF-8 + NUL + file_bytes + NUL)))",
+  "allowed_files": ["main.py"],
+  "required_checks": ["idempotent_conflict", "unicode_payload", "independent_ids", "crash_rollback_retry", "invalid_preserves", "arity"],
+  "time_limit_seconds": 600,
+  "max_round_trips": 30,
+  "max_output_tokens_total": 8192,
+  "grader": "criteria/F03.py:grade",
+  "grader_contract": "grade(exported_candidate, runner); runner(argv, cwd=Path) prepends isolated Python, accepts -I/-c trusted inspection drivers, bounds execution and output, and returns returncode/stdout/stderr bytes only after terminating all candidate writers. Only after confirmed agent stop on a separate export; private oracle and reference fixtures remain outside model workspace. SQLite parsing runs only inside this isolation."
+}

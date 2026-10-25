@@ -1,0 +1,4 @@
+* text=auto eol=lf
+cases/** -text
+criteria/** -text
+seeds/** -text

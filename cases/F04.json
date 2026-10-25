@@ -1,0 +1,15 @@
+{
+  "case_id": "F04",
+  "level": "medium",
+  "brief": "seeds/F04/BRIEF.md",
+  "seed_sha": "2114789805d9289b07f1c104ebfc2f727a74cbf16798c0e008b90560b0f4840f",
+  "oracle_sha": "b871b7374a1d8e688dc14c1f492e317d9e0b7ea19fa6aa0cf66a369e07f78832",
+  "seed_hash_format": "SHA256(concat(sorted(relative_posix_path UTF-8 + NUL + file_bytes + NUL)))",
+  "allowed_files": ["main.py"],
+  "required_checks": ["binary", "empty", "same_bytes", "conflict", "missing", "missing_preserve", "same_path", "directory", "source_directory", "real_filesystem_concurrent_winner_and_status", "sources_unchanged", "temporary_cleanup", "arity"],
+  "time_limit_seconds": 600,
+  "max_round_trips": 30,
+  "max_output_tokens_total": 8192,
+  "grader": "criteria/F04.py:grade",
+  "grader_contract": "grade(exported_candidate, runner); runner(argv, cwd=Path) prepends isolated Python, accepts -I/-c trusted concurrency driver, bounds execution/output/temp storage, and returns returncode/stdout/stderr bytes only after terminating all candidate writers including descendants. Real local filesystem with hard-link support; no candidate imports in grader. Only after confirmed agent stop on a separate export; private oracle and reference fixtures remain outside model workspace."
+}

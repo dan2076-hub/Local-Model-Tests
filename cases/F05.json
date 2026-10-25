@@ -1,0 +1,31 @@
+{
+  "case_id": "F05",
+  "level": "medium",
+  "brief": "seeds/F05/BRIEF.md",
+  "seed_sha": "168b6d33973dc0c5b9b5fc0d957122acae42c84d00c3cb9845be4684cec59b5c",
+  "oracle_sha": "e797e63d61c7dd25ee85ceff11bf072a9bb650e5131ffc514484ec9b9a088806",
+  "seed_hash_format": "SHA256(concat(sorted(relative_posix_path UTF-8 + NUL + file_bytes + NUL)))",
+  "allowed_files": [
+    "queuecli/__init__.py",
+    "queuecli/__main__.py",
+    "queuecli/store.py",
+    "tests/test_queuecli.py"
+  ],
+  "required_checks": [
+    "crud",
+    "unicode_id_sort",
+    "strict_json_boolean",
+    "sqlite_restart_persistence",
+    "duplicate_conflict_preserves",
+    "done_idempotent",
+    "unknown_rejected",
+    "invalid_argv_preserves",
+    "own_unittest",
+    "export_inventory_unchanged"
+  ],
+  "time_limit_seconds": 600,
+  "max_round_trips": 30,
+  "max_output_tokens_total": 8192,
+  "grader": "criteria/F05.py:grade",
+  "grader_contract": "grade(exported_candidate, runner); runner(argv, cwd=Path) prepends OS-isolated Python with bytecode writes disabled, accepts -m and trusted -I/-c SQLite inspection, bounds time/output/storage, and returns returncode/stdout/stderr bytes only after terminating all candidate writers. Only after confirmed agent stop, on a separate export; private oracle and trusted reference fixtures stay outside active model workspace. No candidate imports or SQLite parsing in host grader. Candidate unittest executes through same isolated runner. Source export inventory stays unchanged outside exact grader-owned data directories."
+}

@@ -1,0 +1,15 @@
+{
+  "case_id": "F02",
+  "level": "small",
+  "brief": "seeds/F02/BRIEF.md",
+  "seed_sha": "97e41ad4d8081e78556a2df9bfec8b50626bfeeb403f49a944f24bfe993bc6a6",
+  "oracle_sha": "e91e68d76ad03e42d419d7e3f743f01b84855c8e55b380e439df14daa620e964",
+  "seed_hash_format": "SHA256(concat(sorted(relative_posix_path UTF-8 + NUL + file_bytes + NUL)))",
+  "allowed_files": ["main.py"],
+  "required_checks": ["unicode_sum_sort", "large_integer_exactness", "deterministic", "empty", "invalid_bool_null_negative_float_string", "invalid_json_schema_duplicate_key_utf8", "input_unchanged", "error_preserves_existing_output", "error_does_not_create_output", "same_path", "missing_input", "arity"],
+  "time_limit_seconds": 300,
+  "max_round_trips": 30,
+  "max_output_tokens_total": 8192,
+  "grader": "criteria/F02.py:grade",
+  "grader_contract": "grade(exported_candidate, runner); runner(argv, cwd=Path) prepends isolated Python and returns returncode/stdout/stderr only after terminating all candidate writers. Only after confirmed agent stop; private oracle remains outside model workspace."
+}

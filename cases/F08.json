@@ -1,0 +1,33 @@
+{
+  "case_id": "F08",
+  "level": "complex",
+  "brief": "seeds/F08/BRIEF.md",
+  "seed_sha": "d30623f500b204dc2797902f1bf0680192238d2d8e366608263ef8e22705e352",
+  "oracle_sha": "329406b26257bd3e4db763a9fb77b6511af369f6ec4dae1192e55eac8e41fc44",
+  "seed_hash_format": "SHA256(concat(sorted(relative_posix_path UTF-8 + NUL + file_bytes + NUL)))",
+  "allowed_files": [
+    "main.py"
+  ],
+  "required_checks": [
+    "empty_items",
+    "resume_v1",
+    "resume_v2",
+    "request_binding",
+    "canonical_sha_manifest",
+    "failure_preserves_output",
+    "completed_no_republish",
+    "draft_verification",
+    "invalid_state_preserves",
+    "alias_rejected",
+    "temporary_cleanup",
+    "invalid_flags",
+    "arity",
+    "export_inventory_unchanged",
+    "fresh_failure_seam"
+  ],
+  "time_limit_seconds": 900,
+  "max_round_trips": 30,
+  "max_output_tokens_total": 8192,
+  "grader": "criteria/F08.py:grade",
+  "grader_contract": "grade(exported_candidate, runner); runner(argv, cwd=Path) prepends OS-isolated Python with bytecode writes disabled, bounds runtime/output/storage, and returns returncode/stdout/stderr bytes only after terminating all candidate writers. Only after confirmed agent stop on a separate export; private oracle and operator reference fixtures remain outside active model workspace. No candidate imports or execution in host grader. Continuation uses the predeclared fixed scenario without operator hints. Source export inventory stays unchanged outside exact grader-owned data directories; work directories contain only declared artifacts."
+}
