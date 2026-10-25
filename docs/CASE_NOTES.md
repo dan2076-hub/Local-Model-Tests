@@ -1,11 +1,5 @@
 # Case notes
 
-## F05: an empty SQLite path
-
-The original specification explicitly prohibits empty ID and title values, and an empty tag when supplied. The `--db` argument is required, but there is no separate requirement that its path value be nonempty. SQLite interprets an empty path as a temporary database, whereas the historical grading suite expects an error for `--db ""`.
-
-The original specification and criterion are preserved unchanged. A failure on this criterion alone should therefore be reported separately as a contract ambiguity. Retain the raw score for historical comparisons; if you clarify the contract for a new study, publish a separate version of the specification and criteria in advance and evaluate all participants under the same conditions.
-
 ## F08 and R08: the output path is a directory
 
 The `directory_output` checks actually create a directory. The tasks require artifacts to be preserved when this error occurs, so creating intermediate state/draft artifacts may violate the contract even if the output directory itself is preserved. These checks are retained in their original form; they test functional path handling, rather than imposing a restriction on Python caches.

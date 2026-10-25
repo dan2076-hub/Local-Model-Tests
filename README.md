@@ -2,7 +2,7 @@
 
 A standalone suite of **10 coding tasks**, with specifications, starter files, and independent automated grading criteria. Use it to compare local models and other participants on the same tasks. The checks are independent of the model name and how it is run.
 
-The suite was extracted from a series of actual test runs. **All 46 original files are preserved byte for byte**; their SHA-256 hashes are recorded in `provenance.json` and the task manifests. Completed model solutions and conversations are not included. F06 includes a working baseline queue that the task asks participants to extend.
+The suite was extracted from a series of actual test runs. **All 46 core files are tracked by SHA-256 hashes for the current revision** in `provenance.json` and the task manifests. Completed model solutions and conversations are not included. F06 includes a working baseline queue that the task asks participants to extend.
 
 ## Requirements
 
@@ -50,7 +50,7 @@ The `prepare` command creates a new directory and preserves existing work if the
 | R07 | A separate isomorphic variant of the lifecycle task |
 | R08 | A separate isomorphic variant of the resumable export task |
 
-The exact behavior is defined in `seeds/<ID>/BRIEF.md`. The allowed files, checksums, and grading contract are specified in `cases/<ID>.json`. See [CASE_NOTES.md](docs/CASE_NOTES.md) for the F05 ambiguity and additional clarifications.
+The exact behavior is defined in `seeds/<ID>/BRIEF.md`. The allowed files, checksums, and grading contract are specified in `cases/<ID>.json`. See [CASE_NOTES.md](docs/CASE_NOTES.md) for additional clarifications.
 
 ## Results and limitations
 
@@ -82,6 +82,6 @@ criteria/              Independent grading functions: grade(candidate, runner)
 tools/sandbox.py       Isolated Linux execution and source export
 local_model_tests.py   list / verify / prepare / grade
 tests/                 Integrity, suite management, and harness checks
-provenance.json        SHA-256 hashes of all 46 original files
+provenance.json        SHA-256 hashes of all 46 core files
 docs/CASE_NOTES.md     Notes on interpreting the grading criteria
 ```

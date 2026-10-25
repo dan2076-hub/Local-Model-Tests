@@ -2,7 +2,7 @@
   "case_id": "F06",
   "level": "medium",
   "brief": "seeds/F06/BRIEF.md",
-  "seed_sha": "df21e8ed316b9f8ba8c3dcf182cae8397ec635b316594a0bafb5e38d99258e6a",
+  "seed_sha": "10e83d8d9c7d9b424d108c9f740b5ad1d26f8a6c49a8f7e739124080827a490d",
   "oracle_sha": "d6c415047ce9b7664a48b5e91b21687e9c68c9af2d35e36bc1f0f1c09f2ac774",
   "seed_hash_format": "SHA256(concat(sorted(relative_posix_path UTF-8 + NUL + file_bytes + NUL)))",
   "allowed_files": [

@@ -25,12 +25,12 @@
     {
       "path": "cases/F05.json",
       "bytes": 1537,
-      "sha256": "1aa1f5f3c26b66cece8f82da609375db3aa368ac465280d1a4d9d2dae9d91cdf"
+      "sha256": "40bb44b87741646daf02c969dbc1db9d72578cd5658e987c3049221826331c95"
     },
     {
       "path": "cases/F06.json",
       "bytes": 1737,
-      "sha256": "8300514b9c415871508e8a06cd4778e293881bf822f3ef874892f23c22faad39"
+      "sha256": "1f270480a62444d55c83aa8d42d7d7b36b960072e49f6c134734bb9f9e83b336"
     },
     {
       "path": "cases/F07.json",
@@ -144,8 +144,8 @@
     },
     {
       "path": "seeds/F05/BRIEF.md",
-      "bytes": 2535,
-      "sha256": "0e8bae3ac83b99353e056cae6502fc692f2635f7e48dd6911ec291e18be48230"
+      "bytes": 2656,
+      "sha256": "305f12959f1c0bcaec14405fb6f5bbe84773e0d2f5767c0b2343085aaa308333"
     },
     {
       "path": "seeds/F05/queuecli/__init__.py",
@@ -169,8 +169,8 @@
     },
     {
       "path": "seeds/F06/BRIEF.md",
-      "bytes": 3552,
-      "sha256": "c4212889c4a91bf006be4ebe0f2c8e613b00a082590cc9bca95aa118d6ed8905"
+      "bytes": 3673,
+      "sha256": "ec29d92779cadef6416c5334d534efb095308aefe7809181feb41b491e70a049"
     },
     {
       "path": "seeds/F06/queuecli/__init__.py",
@@ -234,5 +234,8 @@
     }
   ],
   "seed_hash_algorithm": "SHA256(concat(sorted(relative_posix_path UTF-8 + NUL + file_bytes + NUL)))",
-  "source_versions_verified": true
+  "initial_source_versions_verified": true,
+  "suite_revision": "2026-10-25.nonempty-db-path",
+  "revision_base_commit": "16b209a8ac0eb0a0f3b71d216f3d76ac59efbc7b",
+  "revision_description": "F05 and the shared F06 baseline explicitly require a nonempty --db path. Grading code is unchanged."
 }

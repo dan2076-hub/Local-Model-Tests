@@ -4,7 +4,7 @@ The supplied package already implements add/list/done and baseline tests. Extend
 
 Use Python 3.11+ standard library only. No network or external commands in the application. Edit only `queuecli/__init__.py`, `queuecli/__main__.py`, `queuecli/store.py`, and `tests/test_queuecli.py`. Keep a multi-file package with CLI handling in `__main__.py` and SQLite operations in `store.py`.
 
-CLI: `python -m queuecli --db DB add ID TITLE [--tag TAG]`, `python -m queuecli --db DB list`, `python -m queuecli --db DB done ID`. The global `--db` argument is required and precedes the subcommand. ID/title are nonempty strings; whitespace, case and Unicode are preserved. The optional add tag is a nonempty string when supplied; omitted tag is the empty string. Arguments beginning with "-" are outside the data domain. Reject unknown commands/options, missing/extra arguments and empty ID/title/supplied tag with exit 2, empty stdout and nonempty stderr.
+CLI: `python -m queuecli --db DB add ID TITLE [--tag TAG]`, `python -m queuecli --db DB list`, `python -m queuecli --db DB done ID`. The global `--db` argument is required and precedes the subcommand. DB must be a nonempty path string; reject `--db ""` with exit 2, empty stdout and nonempty stderr before opening SQLite. ID/title are nonempty strings; whitespace, case and Unicode are preserved. The optional add tag is a nonempty string when supplied; omitted tag is the empty string. Arguments beginning with "-" are outside the data domain. Reject unknown commands/options, missing/extra arguments and empty ID/title/supplied tag with exit 2, empty stdout and nonempty stderr.
 
 Database starts absent or has exactly this user table:
 ```sql

@@ -4,7 +4,7 @@ Date: October 25, 2026.
 
 | Check | Result |
 |---|---|
-| Integrity of the 46 original files | SHA-256 hashes match the source and provenance records |
+| Integrity of the 46 core files | SHA-256 hashes match the pinned current revision in the provenance records |
 | Manifest references for the ten tasks | Seed and oracle SHA-256 hashes match |
 | Windows, Python 3.11.7 | 32 tests: 18 passed, 14 Linux checks skipped |
 | WSL Ubuntu, Python 3.12.3, dedicated non-root user | All 32 tests passed |
