@@ -1,23 +1,23 @@
-# Проверка самостоятельного проекта
+# Standalone project validation
 
-Дата: 25 октября 2026 года.
+Date: October 25, 2026.
 
-| Проверка | Результат |
+| Check | Result |
 |---|---|
-| Целостность 46 оригинальных файлов | SHA-256 совпадают с источником и provenance |
-| Связи манифестов десяти заданий | Seed и oracle SHA-256 совпадают |
-| Windows, Python 3.11.7 | 32 теста: 18 пройдены, 14 Linux-проверок пропущены |
-| WSL Ubuntu, Python 3.12.3, выделенный non-root пользователь | Все 32 теста пройдены |
+| Integrity of the 46 original files | SHA-256 hashes match the source and provenance records |
+| Manifest references for the ten tasks | Seed and oracle SHA-256 hashes match |
+| Windows, Python 3.11.7 | 32 tests: 18 passed, 14 Linux checks skipped |
+| WSL Ubuntu, Python 3.12.3, dedicated non-root user | All 32 tests passed |
 
-Linux-проверка реально выполняет синтетические программы в bubblewrap: изоляция сети и файлов, границы хранилища, времени и вывода, завершение дочерних процессов, функциональный экспорт без Python-кэша, отрицательный сценарий F01 и проверка F05 на предусмотренном starter F06. Готовые решения моделей для этого не используются.
+The Linux checks actually run synthetic programs in bubblewrap to test network and file isolation; storage, time, and output limits; child process termination; functional export without Python caches; an F01 failure scenario; and F05 grading against the provided F06 starter. No completed model solutions are used for these checks.
 
-Первоначальный запуск под общей WSL-учётной записью столкнулся с `RLIMIT_NPROC`: дополнительные потоки общего UID мешали созданию namespace. Проверка без этого ограничителя подтвердила доступность bubblewrap; переход на существующего выделенного пользователя позволил пройти весь набор. Настройки Linux и системные ограничения не менялись. Причина и рекомендация отражены в README.
+The initial run under the shared WSL account encountered `RLIMIT_NPROC`: additional threads belonging to the shared UID prevented namespace creation. A check without this limiter confirmed that bubblewrap was available; switching to an existing dedicated user allowed the entire suite to pass. Linux settings and system limits were not changed. The cause and recommendation are documented in the README.
 
-Команды воспроизведения из корня проекта:
+To reproduce from the project root:
 
 ```console
 python -B local_model_tests.py verify
 python -B -m unittest discover -s tests -v
 ```
 
-Эти числа относятся к самопроверкам выделенного набора, а не к оценке способностей конкретной модели. Модельные вызовы при подготовке и проверке пакета не выполнялись.
+These counts refer to the standalone suite's self-tests, rather than an evaluation of any particular model's capabilities. No model calls were made while preparing or validating the package.

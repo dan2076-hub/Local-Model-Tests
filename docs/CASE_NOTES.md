@@ -1,21 +1,21 @@
 # Case notes
 
-## F05: пустой путь к SQLite
+## F05: an empty SQLite path
 
-В исходном ТЗ явно запрещены пустые ID, title и переданный tag. Аргумент `--db` обязателен, но отдельного требования о непустом значении его пути нет. SQLite интерпретирует пустой путь как временную базу, тогда как исторический проверяющий набор ожидает ошибку на `--db ""`.
+The original specification explicitly prohibits empty ID and title values, and an empty tag when supplied. The `--db` argument is required, but there is no separate requirement that its path value be nonempty. SQLite interprets an empty path as a temporary database, whereas the historical grading suite expects an error for `--db ""`.
 
-Исходное ТЗ и критерий сохранены без изменения. Поэтому отказ только по этому критерию следует отмечать отдельно как неоднозначность контракта. При историческом сравнении сохраняйте сырой счёт; если уточняете контракт для нового исследования, заранее опубликуйте отдельную версию ТЗ и критериев и проверьте всех участников в одинаковых условиях.
+The original specification and criterion are preserved unchanged. A failure on this criterion alone should therefore be reported separately as a contract ambiguity. Retain the raw score for historical comparisons; if you clarify the contract for a new study, publish a separate version of the specification and criteria in advance and evaluate all participants under the same conditions.
 
-## F08 и R08: выходной путь является каталогом
+## F08 and R08: the output path is a directory
 
-Проверки `directory_output` действительно создают каталог. Задания требуют сохранности артефактов при такой ошибке, поэтому появление промежуточных state/draft может нарушать контракт даже при сохранении самого выходного каталога. Эти проверки сохранены в исходной версии; это функциональная проверка обработки пути, а не ограничение на Python-кэш.
+The `directory_output` checks actually create a directory. The tasks require artifacts to be preserved when this error occurs, so creating intermediate state/draft artifacts may violate the contract even if the output directory itself is preserved. These checks are retained in their original form; they test functional path handling, rather than imposing a restriction on Python caches.
 
-## F06: подготовленная базовая реализация
+## F06: the provided baseline implementation
 
-Работающая очередь в starter F06 — часть входных данных задания на расширение, а не ответ участника исследования. Поскольку её функциональность близка F05, выдавайте задания в отдельных рабочих папках без доступа к остальному репозиторию. R07/R08 также представляют независимые попытки, а не продолжение уже исправленного F07/F08.
+The working queue in the F06 starter is part of the input for an extension task, rather than a study participant's solution. Since its functionality is close to F05, provide tasks in separate working directories without access to the rest of the repository. R07/R08 are also independent attempts, rather than continuations of already corrected F07/F08 solutions.
 
-## Разделение оценки и среды
+## Separating grading from the environment
 
-Oracle получает `grade(candidate_dir, runner)` и проверяет только определённый контракт. Процесс запуска, изоляцию и границы ресурсов обеспечивает runner. Отсутствующий bubblewrap, запрет user namespaces или ошибка запуска runner возвращаются как ошибка инфраструктуры. Остановите все процессы агента перед `--confirmed-stopped`: этот флаг фиксирует условие, но сам не останавливает внешний агент.
+The oracle exposes `grade(candidate_dir, runner)` and checks only the specified contract. The runner handles execution, isolation, and resource limits. Missing bubblewrap, prohibited user namespaces, or a runner startup failure are reported as infrastructure errors. Stop all agent processes before using `--confirmed-stopped`: this flag records that the condition has been met, but does not itself stop an external agent.
 
-Исходные исторические бюджеты в JSON не являются настройками новой модели. Перед сравнением отдельно запишите её версию, квантование, контекст, reasoning, доступные инструменты, правила помощи и фактические ограничения опыта.
+The original historical budgets in JSON are not settings for a new model. Before making a comparison, separately record its version, quantization, context, reasoning, available tools, assistance rules, and the experiment's actual limits.

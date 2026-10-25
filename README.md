@@ -1,21 +1,21 @@
 # Local Model Tests
 
-Самостоятельный набор из **10 заданий для проверки программирования**: ТЗ, стартовые файлы и независимые автоматические критерии. Подходит для сравнения локальных моделей и других исполнителей на одинаковых задачах. Название модели и способ её запуска не привязаны к проверкам.
+A standalone suite of **10 coding tasks**, with specifications, starter files, and independent automated grading criteria. Use it to compare local models and other participants on the same tasks. The checks are independent of the model name and how it is run.
 
-Набор выделен из реально использованной серии испытаний. **46 исходных файлов сохранены без изменений**; их SHA-256 записаны в `provenance.json` и манифестах заданий. Готовые ответы моделей и их переписки в проект не входят. F06 содержит предусмотренную заданием работающую базовую очередь, которую нужно расширить.
+The suite was extracted from a series of actual test runs. **All 46 original files are preserved byte for byte**; their SHA-256 hashes are recorded in `provenance.json` and the task manifests. Completed model solutions and conversations are not included. F06 includes a working baseline queue that the task asks participants to extend.
 
-## Требования
+## Requirements
 
-- Python **3.11+**, без сторонних Python-пакетов.
-- Просмотр, проверка целостности и подготовка задания работают в Windows, Linux и macOS.
-- Для изолированной проверки решений нужен **Linux**, обычный пользователь и `/usr/bin/python3`, `/usr/bin/bwrap`, `/usr/bin/prlimit`. В Ubuntu зависимости устанавливаются командой `sudo apt install python3 bubblewrap util-linux`.
-- В Windows запускайте проверяющий процесс через имеющуюся WSL Ubuntu. Ядро и политика системы должны разрешать вложенные непривилегированные user namespaces; при их недоступности возвращается ошибка инфраструктуры.
+- Python **3.11+**, with no third-party Python packages.
+- Browsing the suite, verifying integrity, and preparing tasks work on Windows, Linux, and macOS.
+- Isolated grading requires **Linux**, a non-root user, and `/usr/bin/python3`, `/usr/bin/bwrap`, and `/usr/bin/prlimit`. On Ubuntu, install the dependencies with `sudo apt install python3 bubblewrap util-linux`.
+- On Windows, run the grader through an existing WSL Ubuntu installation. The kernel and system policy must allow nested unprivileged user namespaces; if they are unavailable, grading returns an infrastructure error.
 
-Для проверок рекомендуется отдельный непривилегированный Linux-пользователь. Ограничение числа процессов учитывает все потоки того же системного UID; в WSL у общей учётной записи могут быть дополнительные процессы в других пространствах имён. Если bubblewrap сообщает `Creating new namespace failed: Resource temporarily unavailable`, а без ограничителя запускается, проверьте использование UID и выполните тесты под выделенным пользователем. Пакет не меняет системные квоты автоматически.
+A dedicated unprivileged Linux user is recommended for grading. The process limit counts all threads belonging to the same system UID; in WSL, a shared account may have additional processes in other namespaces. If bubblewrap reports `Creating new namespace failed: Resource temporarily unavailable` but runs without the limiter, check the UID's resource usage and run the tests under a dedicated user. The package does not change system quotas automatically.
 
-## Быстрый старт
+## Quick start
 
-Из корня проекта:
+From the project root:
 
 ```console
 python -B local_model_tests.py verify
@@ -23,65 +23,65 @@ python -B local_model_tests.py list
 python -B local_model_tests.py prepare F01 candidates/F01
 ```
 
-Откройте `candidates/F01/BRIEF.md` и дайте модели доступ **только к этой подготовленной папке**. Модель выполняет ТЗ и собственные проверки. Файлы `criteria/` и чужие решения не должны находиться в её рабочей области во время попытки. Поскольку проверки опубликованы, независимость опыта зависит от такого разделения.
+Open `candidates/F01/BRIEF.md` and give the model access **only to this prepared directory**. The model implements the specification and runs its own checks. The `criteria/` files and other participants' solutions must be kept outside its workspace during the attempt. Because the checks are public, the independence of the experiment depends on this separation.
 
-После завершения и остановки агента выполните **в Linux**:
+Once the agent has finished and been stopped, run the following **on Linux**:
 
 ```console
 python3 -B local_model_tests.py grade F01 candidates/F01 --confirmed-stopped
 ```
 
-В WSL сначала перейдите в каталог клонированного проекта, например `cd /mnt/d/Git/Local-Model-Tests`, затем выполните команду выше. Для подготовки другого задания замените `F01` нужным ID.
+In WSL, first change to the cloned project directory, for example with `cd /mnt/d/Git/Local-Model-Tests`, then run the command above. To prepare another task, replace `F01` with its ID.
 
-Команда `prepare` создаёт новую папку и сохраняет существующую работу, если путь уже занят. Проверяющий процесс экспортирует зарегистрированные исходники в отдельную временную среду. Побочные файлы вроде `__pycache__` не влияют на функциональный результат: по умолчанию используется политика `functional-source-v1`. Для прежней строгой проверки полного состава каталога есть `--strict-export`.
+The `prepare` command creates a new directory and preserves existing work if the destination already exists. The grader exports the registered source files into a separate temporary environment. Incidental files such as `__pycache__` do not affect the functional result: the default policy is `functional-source-v1`. Use `--strict-export` for the previous strict check of the directory's complete contents.
 
-## Задания
+## Tasks
 
-| ID | Что проверяется |
+| ID | What is tested |
 |---|---|
-| F01 | CSV → JSON, UTF-8/BOM, сортировка, валидация и сохранность файлов |
-| F02 | JSON events → CSV, агрегация, строгие типы и детерминированный вывод |
-| F03 | SQLite-события, конфликты payload и транзакционный rollback |
-| F04 | Публикация файла без перезаписи победителя и идемпотентность |
-| F05 | Многофайловая постоянная очередь CLI и собственные unittest |
-| F06 | Расширение готовой очереди совместимыми status/tag-фильтрами |
-| F07 | Жизненный цикл заданий, ресурсы, unknown/reconcile, drain/fast |
-| F08 | Возобновляемый экспорт, сохранность состояния и manifest SHA-256 |
-| R07 | Отдельный изоморфный вариант жизненного цикла |
-| R08 | Отдельный изоморфный вариант возобновляемого экспорта |
+| F01 | CSV → JSON, UTF-8/BOM, sorting, validation, and file preservation |
+| F02 | JSON events → CSV, aggregation, strict types, and deterministic output |
+| F03 | SQLite events, payload conflicts, and transactional rollback |
+| F04 | Publishing a file without overwriting the winner, and idempotency |
+| F05 | A persistent CLI queue across multiple files, with participant-written unittest tests |
+| F06 | Extending an existing queue with compatible status/tag filters |
+| F07 | Job lifecycle, resources, unknown/reconcile, drain/fast |
+| F08 | Resumable export, state preservation, and manifest SHA-256 |
+| R07 | A separate isomorphic variant of the lifecycle task |
+| R08 | A separate isomorphic variant of the resumable export task |
 
-Точное поведение задаётся `seeds/<ID>/BRIEF.md`. В `cases/<ID>.json` указаны разрешённые файлы, контрольные суммы и контракт проверяющего набора. Неоднозначность F05 и дополнительные пояснения — в [CASE_NOTES.md](docs/CASE_NOTES.md).
+The exact behavior is defined in `seeds/<ID>/BRIEF.md`. The allowed files, checksums, and grading contract are specified in `cases/<ID>.json`. See [CASE_NOTES.md](docs/CASE_NOTES.md) for the F05 ambiguity and additional clarifications.
 
-## Результаты и ограничения
+## Results and limitations
 
-`grade` печатает JSON с индивидуальными критериями, вердиктом и сведениями об изоляции. Коды завершения: **0 — PASS, 1 — функциональный FAIL, 2 — ошибка инфраструктуры или входных данных**. Ошибка среды не считается ошибкой модели.
+`grade` prints JSON containing individual criteria, a verdict, and isolation details. Exit codes: **0 — PASS, 1 — functional FAIL, 2 — infrastructure or input error**. An environment error is not counted as a model failure.
 
-Проверка запускает код в двух вложенных bubblewrap-средах с изолированными сетью, процессами и файловыми системами. Внутренняя среда не видит исходники проверяющего набора. Используются ограничения времени, вывода, памяти процесса и временного хранилища. Это перенесённая проверенная обвязка; ограничения памяти применяются к процессу, а не как общая cgroup-квота.
+Grading runs code in two nested bubblewrap environments with isolated networks, processes, and filesystems. The inner environment cannot see the grading suite's source code. Limits apply to execution time, output, process memory, and temporary storage. This is a port of the tested harness; memory limits apply per process rather than as an aggregate cgroup quota.
 
-Сам проект не обращается к API модели, не загружает веса и не задаёт её reasoning или окно контекста. Поля `max_output_tokens_total`, `max_round_trips` и `time_limit_seconds` в исторических манифестах относятся к раннему режиму генерации и сохранены ради воспроизводимости. Команды этого проекта их **не применяют**; это не ограничения на новую модельную попытку. Короткие лимиты запуска готовой программы в sandbox относятся к исполнению проверок, а не ко времени рассуждения модели.
+The project itself does not call a model API, load weights, or configure the model's reasoning or context window. The `max_output_tokens_total`, `max_round_trips`, and `time_limit_seconds` fields in the historical manifests refer to an earlier generation setup and are retained for reproducibility. This project's commands **do not enforce them**; they do not limit a new model attempt. The short sandbox execution limits for the completed program apply to running the checks, not to the model's reasoning time.
 
-Сравнивайте одинаковые задания, правила помощи и параметры попытки. Количество отдельных утверждений отличается между заданиями, поэтому общий процент пройденных утверждений сам по себе не является универсальной оценкой модели.
+Use the same tasks, assistance rules, and attempt settings when making comparisons. The number of individual assertions differs between tasks, so the overall percentage of passed assertions is not, by itself, a universal model score.
 
-## Проверка проекта
+## Project validation
 
 ```console
 python -B local_model_tests.py verify
 python -B -m unittest discover -s tests -v
 ```
 
-В Windows проверки Linux-изоляции отмечаются как skipped. В Linux они выполняются реально и требуют установленных инструментов и доступных user namespaces. Самопроверки не вызывают модель и не содержат готовых решений основных заданий.
+On Windows, Linux isolation checks are marked as skipped. On Linux, they actually run and require the installed tools and available user namespaces. The self-tests do not call a model or contain completed solutions to the main tasks.
 
-Проверка выделенного проекта: [VALIDATION.md](docs/VALIDATION.md).
+Validation of the standalone project: [VALIDATION.md](docs/VALIDATION.md).
 
-## Структура
+## Structure
 
 ```text
-cases/                 Манифесты десяти заданий
-seeds/                 Только ТЗ и предусмотренные стартовые файлы
-criteria/              Независимые проверяющие функции grade(candidate, runner)
-tools/sandbox.py       Изолированное Linux-исполнение и экспорт исходников
+cases/                 Manifests for the ten tasks
+seeds/                 Only specifications and intended starter files
+criteria/              Independent grading functions: grade(candidate, runner)
+tools/sandbox.py       Isolated Linux execution and source export
 local_model_tests.py   list / verify / prepare / grade
-tests/                 Проверки целостности, управления набором и обвязки
-provenance.json        SHA-256 всех 46 оригинальных файлов
-docs/CASE_NOTES.md     Особенности интерпретации критериев
+tests/                 Integrity, suite management, and harness checks
+provenance.json        SHA-256 hashes of all 46 original files
+docs/CASE_NOTES.md     Notes on interpreting the grading criteria
 ```
